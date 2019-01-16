@@ -1,0 +1,14 @@
+{
+  "c++17" : {
+    "TEMPLATE"    : "template.cpp",
+    "DEBUG_FLAGS" : "-DDEBUG",
+    "COMPILE_CMD" : "g++ -g -std=c++17 -Wall -Wextra $DBG",
+    "RUN_CMD"     : "./a.out"
+  },
+  "c++11" : {
+    "TEMPLATE"    : "template.cpp",
+    "DEBUG_FLAGS" : "-DDEBUG",
+    "COMPILE_CMD" : "g++ -g -std=c++11 -Wall $DBG",
+    "RUN_CMD"     : "./a.out"
+  }
+}
