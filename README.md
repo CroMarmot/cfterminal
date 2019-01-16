@@ -44,7 +44,7 @@ bs4/htmlparser
 
 request...python default module
 
-# ARGMENT 
+# ARG 
 
 1. --user --pass
 2. config.py
