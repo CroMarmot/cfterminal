@@ -1,3 +1,25 @@
+# About
+
+cfterminal - codeforces terminal tool
+
+# Functions
+
+1. analyze contest's example in/out
+
+2. test code
+
+3. handin code
+
+# DEP
+
+bs4/htmlparser
+
+`pip install beautifulsoup4`
+
+request...python default module
+# Usage
+
+
 # DESIGN
 
 module division 
@@ -37,12 +59,6 @@ README.md
 makefile :makeclean
 ```
 
-
-# DEP
-
-bs4/htmlparser
-
-request...python default module
 
 # ARG 
 
