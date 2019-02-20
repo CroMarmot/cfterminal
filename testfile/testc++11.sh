@@ -4,19 +4,22 @@ RED="\e[31m"
 DEFAULT="\e[39m"
 GREEN="\e[32m"
 
+TESTFOLDER=TEST
+
 INPUT_NAME="$1.in."
 OUTPUT_NAME="$1.out."
 MY_NAME="$1.my."
-EXECMD="$1"
+BIN="$TESTFOLDER/$1"
+EXECMD="./$BIN"
 
-mkdir -p TEST
+mkdir -p $TESTFOLDER
 file="$1".cpp
 if [ ! -f "$file" ]; then
     echo "$file not found."
     exit
 fi
 
-if ! clang++ -o "$1" $file -std=gnu++11 -O2 -g -Wall -Wcomma
+if ! clang++ -o $BIN $file -std=gnu++11 -O2 -g -Wall -Wcomma
 then
     exit
 fi
@@ -28,9 +31,9 @@ while [ -f "$INPUT_NAME$i" ] && [ -f "$OUTPUT_NAME$i" ]
 do
   input="$INPUT_NAME$i"
   output="$OUTPUT_NAME$i"
-  myoutput="$MY_NAME$i"
+  myoutput="$TESTFOLDER/$MY_NAME$i"
 
-  if ! `which time` -o time.out -f "(%es)" ./"$EXECMD" < $input > $myoutput; then
+  if ! `which time` -o time.out -f "(%es)" $EXECMD < $input > $myoutput; then
     echo -e $RED"Sample test #$i: Runtime Error""$DEFAULT"
     cat time.out
     echo "========================================"

@@ -4,11 +4,13 @@ cfterminal - codeforces terminal tool
 
 # Functions
 
-1. analyze contest's example in/out
+[x] 1. analyze contest's example in/out
 
-2. test code
+[x] 2. test code
 
-3. handin code
+[ ] 3. handin code
+
+[ ] 4. multiple language support(C++17 C++ java ...)
 
 # Dependence
 
@@ -18,18 +20,14 @@ bs4/htmlparser
 
 request...python default module
 
-time
-
-in test , the code use time instead of default time
-
-`sudo apt install time`
+time (not default in debian) using for test
 
 # Usage
 
 1. cp `_config.py` to `config.py` and modify it
 2. run `parse.py ` + contestId
 3. write code
-4. run `test.py/sh`
+4. run `test.py/sh` (考虑中 目前的感觉还是不要合并成一种？)
 5. run `submit.py`
 
 对于反复循环使用
