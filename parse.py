@@ -158,12 +158,12 @@ def main():
         "contestId": mp_ret.contest,
         "language": language_params["value"],
     }
-    with open(folder + 'state.json', "w") as projson:
-        json.dump(contest_state, projson)
-        projson.close()
+    with open(folder + 'state.json', "w") as statejson:
+        json.dump(contest_state, statejson)
+        statejson.close()
 
-    print("cd " + folder)
     os.chdir(folder)
+    os.system("$SHELL")
 
 
 if __name__ == '__main__':
