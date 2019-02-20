@@ -1,14 +1,17 @@
 {
-  "c++17" : {
-    "TEMPLATE"    : "template.cpp",
-    "DEBUG_FLAGS" : "-DDEBUG",
-    "COMPILE_CMD" : "g++ -g -std=c++17 -Wall -Wextra $DBG",
-    "RUN_CMD"     : "./a.out"
+  "c++17": {
+    "TEMPLATE": "template/Main.cpp",
+    "TESTFILE": "testfile/testc++17.sh",
+    "value": 54
   },
-  "c++11" : {
-    "TEMPLATE"    : "template.cpp",
-    "DEBUG_FLAGS" : "-DDEBUG",
-    "COMPILE_CMD" : "g++ -g -std=c++11 -Wall $DBG",
-    "RUN_CMD"     : "./a.out"
+  "c++11": {
+    "TEMPLATE": "template/Main.cpp",
+    "TESTFILE": "testfile/testc++11.py",
+    "value": 42
+  },
+  "Java": {
+    "TEMPLATE": "template/Main.java",
+    "TESTFILE": "testfile/testjava.sh",
+    "value": 36
   }
 }

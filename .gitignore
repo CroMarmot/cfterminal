@@ -105,5 +105,6 @@ venv.bak/
 
 
 # cfterminal
-config.py
+config.json
 dist
+.idea

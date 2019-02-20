@@ -9,11 +9,14 @@ import shutil
 import myparse
 from color import *
 
-# Problems parser.
+
 class CodeforcesProblemParser(HTMLParser):
+    def error(self, message):
+        print("ERROR in CodeforcesProblemParser", message)
+
     def __init__(self):
         HTMLParser.__init__(self)
-        self.testcase = [] # output
+        self.testcase = []  # output
 
         self.tmp = None
         self.state = False
@@ -23,7 +26,7 @@ class CodeforcesProblemParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag == 'div':
             if attrs == [('class', 'input')]:
-                self.tmp = ['','']
+                self.tmp = ['', '']
                 self.pre = True
                 self.itr = 0
             elif attrs == [('class', 'output')]:
@@ -43,15 +46,17 @@ class CodeforcesProblemParser(HTMLParser):
                 self.tmp = None
 
     def handle_entityref(self, name):
-        if self.state :
+        if self.state:
             self.tmp[self.itr] += self.unescape(('&%s;' % name)).encode('utf-8')
 
     def handle_data(self, data):
-        if self.state :
+        if self.state:
             self.tmp[self.itr] += data
 
-# Contest parser.
+
 class CodeforcesContestParser(HTMLParser):
+    def error(self, message):
+        print("ERROR in CodeforcesContestParser", message)
 
     def __init__(self, contest):
         HTMLParser.__init__(self)
@@ -65,10 +70,10 @@ class CodeforcesContestParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         if self.name == '' and attrs == [('style', 'color: black'), ('href', '/contest/%s' % (self.contest))]:
-                self.start_contest = True
+            self.start_contest = True
         elif tag == 'option':
             if len(attrs) == 1:
-                regexp = re.compile(r"'[A-Z]'") # The attrs will be something like: ('value', 'X')
+                regexp = re.compile(r"'[A-Z]\d?'")  # The attrs will be something like: ('value', 'X')
                 string = str(attrs[0])
                 search = regexp.search(string)
                 if search is not None:
@@ -89,7 +94,7 @@ class CodeforcesContestParser(HTMLParser):
         elif self.start_problem:
             self.problem_name += data
 
-# Parses each problem page.
+
 def parse_problem(contest, problem):
     url = 'http://codeforces.com/contest/%s/problem/%s' % (contest, problem)
     html = urlopen(url).read()
@@ -97,7 +102,7 @@ def parse_problem(contest, problem):
     parser.feed(html.decode('utf-8'))
     return parser.testcase
 
-# Parses the contest page.
+
 def parse_contest(contest):
     url = 'http://codeforces.com/contest/%s' % (contest)
     html = urlopen(url).read()
@@ -105,55 +110,60 @@ def parse_contest(contest):
     parser.feed(html.decode('utf-8'))
     return parser
 
-# Generates the test script.
-def generate_test_script(folder, language, num_tests, problem):
 
-    print("GENERATE ")
-
-# Main function.
 def main():
     mp_ret = myparse.doparse()
 
     contest = mp_ret.contest
     language = mp_ret.language
     with open('language.json') as f:
-        language_params = json.load(f)
+        language_params = json.load(f)[language]
 
     # Find contest and problems.
-    print ('Contest: \t',contest)
-    print ('Language:\t',language)
+    print('Contest: \t', contest)
+    print('Language:\t', language)
     content = parse_contest(contest)
-    print (BOLD+GREEN_F+'Round name:\t'+content.name+NORM)
-    print ('%d Problems' % (len(content.problems)))
+    print(BOLD + GREEN_F + 'Round name:\t' + content.name + NORM)
+    print('%d Problems' % (len(content.problems)))
 
-    # Find problems and test cases.
-    TemplateFile = language_params[language]["TEMPLATE"]
-    suffix = '.'+TemplateFile.split('.')[-1]
+    # initial
+    template_file = language_params["TEMPLATE"]
+    suffix = '.' + template_file.split('.')[-1]
     folder = 'dist/%s_%s/' % (contest, language)
     try:
         os.makedirs(folder)
     except:
-        print('*******'+folder + '*******')
-    shutil.copyfile('test.py',folder+'test.py')
+        print('******* ' + folder + ' GENERATED *******')
+    testfile = language_params["TESTFILE"]
+    testfile_newname = "test." + testfile.split('.')[-1]
+    shutil.copy(testfile, folder + testfile_newname)
+    shutil.copy("submit.py", folder + "submit.py")
 
-    problems = {}
+    # Find problems and test cases.
+    # Generate pretest in/out file and template code file
     for index, problem in enumerate(content.problems):
-        print ('Downloading %s: %s...' % (problem, content.problem_names[index]))
-        testcase = parse_problem(contest, problem)
-        print(testcase)
-        shutil.copyfile(TemplateFile,folder+problem+suffix)
-        print('%d sample test(s) found.' % len(testcase))
-        problems[problem] = len(testcase) 
-        for idx,tc in enumerate(testcase):
-            with open(folder+problem+'.in.'+str(idx),"w") as inputcase:
+        print('Downloading %s: %s...' % (problem, content.problem_names[index]))
+        test_case = parse_problem(contest, problem)
+        print("Generate " + problem + suffix)
+        shutil.copy(template_file, folder + problem + suffix)
+        print('%d sample test(s) found.' % len(test_case))
+        for idx, tc in enumerate(test_case):
+            with open(folder + problem + '.in.' + str(idx), "w") as inputcase:
                 inputcase.write(tc[0])
                 inputcase.close()
-            with open(folder+problem+'.out.'+str(idx),"w") as outputcase:
+            with open(folder + problem + '.out.' + str(idx), "w") as outputcase:
                 outputcase.write(tc[1])
                 outputcase.close()
-    with open(folder+'pro.json',"w") as projson:
-        json.dump(problems,projson)
+    contest_state = {
+        "contestId": mp_ret.contest,
+        "language": language_params["value"],
+    }
+    with open(folder + 'state.json', "w") as projson:
+        json.dump(contest_state, projson)
         projson.close()
+
+    print("cd " + folder)
+    os.chdir(folder)
 
 
 if __name__ == '__main__':
