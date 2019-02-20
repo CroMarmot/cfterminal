@@ -6,8 +6,12 @@ import re
 import os
 import shutil
 
-import myparse
-from color import *
+import languagecontestparse
+
+RED: str = '\033[31m'
+GREEN: str = '\033[32m'
+BOLD: str = '\033[1m'
+RESET: str = '\033[0m'
 
 
 class CodeforcesProblemParser(HTMLParser):
@@ -110,9 +114,11 @@ def parse_contest(contest):
     parser.feed(html.decode('utf-8'))
     return parser
 
+def format_testcase(teststring):
+    return teststring.lstrip("\n ").rstrip("\n ")
 
 def main():
-    mp_ret = myparse.doparse()
+    mp_ret = languagecontestparse.doparse()
 
     contest = mp_ret.contest
     language = mp_ret.language
@@ -123,7 +129,7 @@ def main():
     print('Contest: \t', contest)
     print('Language:\t', language)
     content = parse_contest(contest)
-    print(BOLD + GREEN_F + 'Round name:\t' + content.name + NORM)
+    print(BOLD + GREEN + 'Round name:\t' + content.name + RESET)
     print('%d Problems' % (len(content.problems)))
 
     # initial
@@ -149,14 +155,15 @@ def main():
         print('%d sample test(s) found.' % len(test_case))
         for idx, tc in enumerate(test_case):
             with open(folder + problem + '.in.' + str(idx), "w") as inputcase:
-                inputcase.write(tc[0])
+                inputcase.write(format_testcase(tc[0]))
                 inputcase.close()
             with open(folder + problem + '.out.' + str(idx), "w") as outputcase:
-                outputcase.write(tc[1])
+                outputcase.write(format_testcase(tc[1]))
                 outputcase.close()
     contest_state = {
         "contestId": mp_ret.contest,
         "language": language_params["value"],
+        "suffix": suffix,
     }
     with open(folder + 'state.json', "w") as statejson:
         json.dump(contest_state, statejson)

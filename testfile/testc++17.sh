@@ -12,49 +12,48 @@ MY_NAME="$1.my."
 BIN="$TESTFOLDER/$1"
 EXECMD="./$BIN"
 
-mkdir -p $TESTFOLDER
+mkdir -p ${TESTFOLDER}
 file="$1".cpp
-if [ ! -f "$file" ]; then
+if [[ ! -f "$file" ]]; then
     echo "$file not found."
     exit
 fi
 
-if ! clang++ -o $BIN $file -std=gnu++17 -O2 -g -Wall -Wcomma
+if ! clang++ -o ${BIN} ${file} -std=gnu++17 -O2 -g -Wall -Wcomma
 then
     exit
 fi
 
-rm -R $MY_NAME* &>/dev/null
+rm -R ${MY_NAME}* &>/dev/null
 
 i=0
-while [ -f "$INPUT_NAME$i" ] && [ -f "$OUTPUT_NAME$i" ]
+while [[ -f "$INPUT_NAME$i" ]] && [[ -f "$OUTPUT_NAME$i" ]]
 do
   input="$INPUT_NAME$i"
   output="$OUTPUT_NAME$i"
   myoutput="$TESTFOLDER/$MY_NAME$i"
 
-  if ! `which time` -o time.out -f "(%es)" $EXECMD < $input > $myoutput; then
-    echo -e $RED"Sample test #$i: Runtime Error""$DEFAULT"
-    cat time.out
-    echo "========================================"
+  if ! `which time` -o time.out -f "( %es )" ${EXECMD} < ${input} > ${myoutput}; then
+    echo -e ${RED}"Sample test #$i: Runtime Error""$DEFAULT"
     echo "Sample Input #$i"
-    cat $input
-  elif diff --brief -B --ignore-trailing-space $myoutput $output; then
-    echo -e $GREEN"Sample test #$i: Accepted"$DEFAULT
-    cat time.out
+    cat ${input}
+    echo
+  elif diff --brief -B --ignore-trailing-space ${myoutput} ${output}; then
+    echo -e ${GREEN}"Sample test #$i: Accepted"${DEFAULT}
   else
-    echo -e $RED"Sample test #$i: Wrong Answer"$DEFAULT
-    cat time.out
+    echo -e ${RED}"Sample test #$i: Wrong Answer"${DEFAULT}
     echo "========================================"
     echo "Sample Input #$i"
-    cat $input
-    echo "========================================"
+    cat ${input}
+    echo
     echo "Sample Output #$i"
-    cat $output
-    echo "========================================"
+    cat ${output}
+    echo
     echo "My Output #$i"
-    cat $myoutput
-    echo "========================================"
+    cat ${myoutput}
+    echo
   fi
+  cat time.out
+  echo "========================================"
   i=$[$i+1]
 done

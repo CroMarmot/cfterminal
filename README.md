@@ -2,101 +2,54 @@
 
 cfterminal - codeforces terminal tool
 
-# Functions
+python3 only !
 
 [x] 1. analyze contest's example in/out
 
 [x] 2. test code
 
-[ ] 3. handin code
+[x] 3. submit code
 
-[ ] 4. multiple language support(C++17 C++ java ...)
-
-# Dependence
-
-bs4/htmlparser
-
-`pip install beautifulsoup4`
-
-request...python default module
-
-time (not default in debian) using for test
+[ ] 4. multiple language support(C++17 C++11 ...)
 
 # Usage
 
+0. Install Dependency `pip3 install -r requirements.txt`
 1. cp `_config.py` to `config.py` and modify it
 2. run `parse.py ` + contestId
 3. write code
 4. run `test.py/sh` (考虑中 目前的感觉还是不要合并成一种？)
 5. run `submit.py`
 
-对于反复循环使用
-
-1. 运行解析 ./parse.py 比赛id，不带任何其它参数，进入工作目录
-2. 进行编码 (分多个目录或者全一个目录)
-3. 执行测试./test.sh/.py A (不用关心比赛id) 
-4. 提交./submit.py/sh A (不用关心比赛id，文件后缀，语言选择) 并返回结果
-
-用户名密码存最外
-
-当需要换语言时，一个是参数parse.py,配置config（默认语言），support（支持,模板，测试文件，语言选择配置）
-
 # DESIGN
 
-module division 
-
-1. argparse (from args/config.py/default)
-2. login && cookie 
-3. parse problem example and download
-4. test (bash)
-5. submit (bash)
-
-DIR:
-
 ```
-template/
-  a.cpp
-_id.py
-language.json : compiler insuffix(.cpp) outsuffix(.)
-cft_parse.py
-cft_handin.py
-module/
-  argparse.py (username / password / contestid / language )
-  webwrap.py (login && keep cookie && visit && return result)
-  analyser.py (bs4 + problem analyse)
-  localgen.py (generate local file test file and so on)
-.gitignore
-dist/
-  contestID/
-    language+version/
-      A.cpp
-      B.cpp
-      a.in.1
-      a.out.1
-      usr.out.1
-      ./test.sh X
-      makefile :make clean
-README.md
-makefile :makeclean
+./
+├── color.py
+├── _config.json
+├── handin.py
+├── language.json
+├── LICENSE
+├── Makefile
+├── myparse.py
+├── parse.py
+├── README.md
+├── requirements.txt
+├── submit.py
+├── template
+│   ├── Main.cpp
+│   ├── Main.go
+│   └── Main.java
+└── testfile
+    ├── README.md
+    ├── testc++11.sh
+    ├── testc++17.sh
+    └── testjava.sh
 ```
-
-
-# ARG 
-
-1. --user --pass
-2. config.json
 
 # TODO
 
-实现提交
-
-制作java的template
-
-实现 java,python的template 和测试
-
-加上参数支持 比如 user pass 比赛语言
-
-整理代码结构 命名
+实现 java,python的template 以及 测试
 
 全英文
 
@@ -104,7 +57,9 @@ makefile :makeclean
 
 # 相关
 
-关于language.json 的value值 和cf上的select选择框 对应
+language.json 的value值 和cf上的select选择框 对应
+
+**注意配置language.json时这一项是字符串不是数字**
 
 |compiler|value|
 |---|---|
@@ -139,15 +94,29 @@ makefile :makeclean
 
 # 编写思考+进度
 
+0.0.7 移除了Click(原来只用于解析 两个参数和print)，这里直接用argparse+print实现
 0.0.6 修改了测试shell，目前先写的是C++的，之后可能会看java等等通用的样子再改一改
 0.0.5 支持了Div3题目 比如1118中D1 D2，原来解析器解析不了
 0.0.4 支持了比赛时提交（原来的项目因为cf的页面设计 不能在外部提交进行中的比赛代码）
 0.0.3 把config设计为_config.json,生成的具体比赛代码放入dist,均从版本跟踪中去除
 0.0.2 希望从使用最简便的方式反向思考去设计结构,简化了参数 修改目录结构
-0.0.1 根据reference的代码 把部分代码进行移动整理
+0.0.1 根据idne的代码 把部分代码进行移动整理 修复一些设计 修复空格tab混用
 
-# reference
+# 工作流程
 
-https://github.com/endiliey/idne
+0. 用户先配置config.json (用户名，密码，语言(所有语言支持见language.json))
+1. 运行parse.py+比赛id，通过URL获取比赛页面
+2. 通过HTML分析出所有题目的名字
+3. 通过题目名字得到URL，获取题目页面，分析HTML，得到样例输入输出
+4. 根据语言配置建立文件夹，并复制模板程序，测试程序，提交程序，生成state.json(比赛id，语言value，程序后缀)，和上面分析得到的样例
+5. 测试[可选]自己运行测试代码
+6. 提交[可选]根据state.json（比赛id，语言，后缀）和最外层的config.json（用户名和密码）,和用户传递的题号(如A)，直接提交
+7. 通过codeforces提供的api查询提交结果并显示
 
-https://misc.flogisoft.com/bash/tip_colors_and_formatting
+# Reference
+
+[idne](https://github.com/endiliey/idne)
+
+[colors](https://misc.flogisoft.com/bash/tip_colors_and_formatting)
+
+[robobrowser](https://robobrowser.readthedocs.io/en/latest/readme.html)

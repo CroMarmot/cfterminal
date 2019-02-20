@@ -2,16 +2,16 @@
   "c++17": {
     "TEMPLATE": "template/Main.cpp",
     "TESTFILE": "testfile/testc++17.sh",
-    "value": 54
+    "value": "54"
   },
   "c++11": {
     "TEMPLATE": "template/Main.cpp",
     "TESTFILE": "testfile/testc++11.py",
-    "value": 42
+    "value": "42"
   },
-  "Java": {
+  "Java8": {
     "TEMPLATE": "template/Main.java",
     "TESTFILE": "testfile/testjava.sh",
-    "value": 36
+    "value": "36"
   }
 }
