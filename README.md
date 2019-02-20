@@ -90,13 +90,15 @@ value in language.json is according to the option on codeforces' webpage
 
 # Thinking and log
 
-0.0.7 remove click dependency , replace with argparse and print
-0.0.6 rewrite test.sh (now only support c++17 and c++11)
-0.0.5 support Div3's problem name such as D1 D2 in 1118
-0.0.4 supporting handing during the contest [here also](https://github.com/endiliey/idne/issues/5)
-0.0.3 replace config design with `_config.json`, and put generated code into `dist`, remove both from git track
-0.0.2 design for ez use, reduce some argument
-0.0.1 according to idne's code, remanage &fix 
+|history||
+|---|---|
+|0.0.7| remove click dependency , replace with argparse and print|
+|0.0.6| rewrite test.sh (now only support c++17 and c++11)|
+|0.0.5| support Div3's problem name such as D1 D2 in 1118|
+|0.0.4| supporting handing during the contest [here also](https://github.com/endiliey/idne/issues/5)|
+|0.0.3| replace config design with `_config.json`, and put generated code into `dist`, remove both from git track|
+|0.0.2| design for ez use, reduce some argument|
+|0.0.1| according to idne's code, remanage &fix |
 
 # Reference
 
