@@ -1,3 +1,11 @@
-目前只有C++的两个写好了
+Only support C++11 & C++17 now
 
-java的需要文件名Main.java，计划是内部建一个TEST文件夹复制进去测试
+java need the filename equal Main.java, the furture plan is build a TEST folder and testing it
+
+maybe i will combine all language test tool in 1 file
+
+# TODO
+
+support memory argument (g++ --stack... / java --Xmx...)
+
+https://codeforces.com/favourite/blogEntries
