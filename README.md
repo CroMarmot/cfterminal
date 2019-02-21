@@ -15,7 +15,7 @@ python3 only !
 # Usage
 
 0. Install Dependency `pip3 install -r requirements.txt`
-1. cp `_config.py` to `config.py` and modify it
+1. copy `_config.json` to `config.json` and modify it
 2. run `parse.py <contestId>`
 3. write code
 4. run `test.py/sh` (considering.... now is different testfile for different language)
