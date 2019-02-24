@@ -18,7 +18,7 @@ python3 only !
 1. copy `_config.json` to `config.json` and modify it
 2. run `parse.py <contestId>`
 3. write code
-4. run `test.py/sh` (considering.... now is different testfile for different language)
+4. run `test.py/sh <problemId>` (considering.... now is different testfile for different language)
 5. run `submit.py <problemId>`
 
 # Folder
