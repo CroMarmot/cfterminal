@@ -41,7 +41,7 @@ class CodeforcesProblemParser(HTMLParser):
             self.state = True
 
     def handle_endtag(self, tag):
-        if tag == 'br' and self.state and self.tmp[self.itr] != '':
+        if tag == 'br' and self.state and self.tmp is not None and self.tmp[self.itr] != '':
             self.tmp[self.itr] += '\n'
         if tag == 'pre' and self.state:
             self.state = False
@@ -54,7 +54,7 @@ class CodeforcesProblemParser(HTMLParser):
             self.tmp[self.itr] += self.unescape(('&%s;' % name)).encode('utf-8')
 
     def handle_data(self, data):
-        if self.state:
+        if self.state and self.tmp is not None:
             self.tmp[self.itr] += data
 
 
