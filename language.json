@@ -18,5 +18,20 @@
     "TEMPLATE": "template/Main.java",
     "TESTFILE": "testfile/testjava.sh",
     "value": "36"
+  },
+  "python2":{
+    "TEMPLATE": "template/Main.py",
+    "TESTFILE": "testfile/testpython2.sh",
+    "value": "7"
+  },
+  "python3":{
+    "TEMPLATE": "template/Main.py",
+    "TESTFILE": "testfile/testpython3.sh",
+    "value": "31"
+  },
+  "go":{
+    "TEMPLATE": "template/Main.go",
+    "TESTFILE": "testfile/testgo11.sh",
+    "value": "32"
   }
 }
