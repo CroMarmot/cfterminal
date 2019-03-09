@@ -14,12 +14,14 @@ python3 only !
 
 # Usage
 
+
 0. Install Dependency `pip3 install -r requirements.txt`
-1. copy `_config.json` to `config.json` and modify it
-2. run `parse.py <contestId>`
-3. write code
-4. run `test.py/sh <problemId>` (considering.... now is different testfile for different language)
-5. run `submit.py <problemId>`
+1. Install `time`, `sudo apt install time`, this `time` is powerful than linux built-in `time` check is `which time` returns `/usr/bin/time`
+2. copy `_config.json` to `config.json` and modify it
+3. run `parse.py <contestId>`
+4. write code
+5. run `test.sh <problemId>` (different testfile for different language)
+6. run `submit.py <problemId>`
 
 # Folder
 
