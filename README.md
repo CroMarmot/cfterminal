@@ -14,42 +14,17 @@ python3 only !
 
 # Usage
 
-
 0. Install Dependency `pip3 install -r requirements.txt`
-1. Install `time`, `sudo apt install time`, this `time` is powerful than linux built-in `time` check is `which time` returns `/usr/bin/time`
+1. Install `time`: `sudo apt install time`, this `time` is powerful than linux built-in `time` check if `which time` returns `/usr/bin/time`
 2. copy `_config.json` to `config.json` and modify it
-3. run `parse.py <contestId>`
+3. `./parse.py <contestId>` e.g. `./parse.py 1108`
 4. write code
-5. run `test.sh <problemId>` (different testfile for different language)
-6. run `submit.py <problemId>`
-
-# Folder
-
-```
-├── _config.json
-├── config.json
-├── dist
-│   └── <contestId>_<language>
-├── languagecontestparse.py
-├── language.json
-├── LICENSE
-├── Makefile
-├── parse.py
-├── README.md
-├── requirements.txt
-├── submit.py
-├── template
-│   ├── Main.cpp
-│   ├── Main.go
-└── testfile
-    ├── README.md
-    ├── testc++11.sh
-    └── testc++17.sh
-```
+5. `./test.sh <problemId>` e.g. `./test.sh A`
+6. `./submit.py <problemId>` e.g. `./submit.py A`
 
 # TODO
 
-implement java/python/golang 's template and testfile
+implement python/golang 's template and testfile
 
 add some error check (such as if file exist)
 
