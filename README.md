@@ -94,6 +94,7 @@ value in language.json is according to the option on codeforces' webpage
 
 |history||
 |---|---|
+|0.0.8| use symlink instead of copying `test.sh` and `submit.py`|
 |0.0.7| remove click dependency , replace with argparse and print|
 |0.0.6| rewrite test.sh (now only support c++17 and c++11)|
 |0.0.5| support Div3's problem name such as D1 D2 in 1118|

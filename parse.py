@@ -5,6 +5,7 @@ import json
 import re
 import os
 import shutil
+import errno
 
 import languagecontestparse
 
@@ -12,6 +13,14 @@ RED: str = '\033[31m'
 GREEN: str = '\033[32m'
 BOLD: str = '\033[1m'
 RESET: str = '\033[0m'
+
+def force_symlink(src: str, dst: str):
+    try:
+        os.symlink(src, dst)
+    except OSError as e:
+        if e.errno == errno.EEXIST:
+            os.remove(dst)
+            os.symlink(src, dst)
 
 
 class CodeforcesProblemParser(HTMLParser):
@@ -142,8 +151,12 @@ def main():
         print('******* ' + folder + ' GENERATED *******')
     testfile = language_params["TESTFILE"]
     testfile_newname = "test." + testfile.split('.')[-1]
-    shutil.copy(testfile, folder + testfile_newname)
-    shutil.copy("submit.py", folder + "submit.py")
+    # shutil.copy(testfile, folder + testfile_newname)
+    # shutil.copy("submit.py", folder + "submit.py")
+    force_symlink("../../"+testfile, folder + testfile_newname)
+    force_symlink("../../"+"submit.py", folder + "submit.py")
+
+
 
     # Find problems and test cases.
     # Generate pretest in/out file and template code file
