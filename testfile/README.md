@@ -8,4 +8,4 @@ maybe i will combine all language test tool in 1 file
 
 support memory argument (g++ --stack... / java --Xmx...)
 
-https://codeforces.com/favourite/blogEntries
+https://codeforces.com/blog/entry/79

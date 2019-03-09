@@ -9,7 +9,12 @@
     "TESTFILE": "testfile/testc++11.py",
     "value": "42"
   },
-  "Java8": {
+  "c++14": {
+    "TEMPLATE": "template/Main.cpp",
+    "TESTFILE": "testfile/testc++14.py",
+    "value": "50"
+  },
+  "java8": {
     "TEMPLATE": "template/Main.java",
     "TESTFILE": "testfile/testjava.sh",
     "value": "36"

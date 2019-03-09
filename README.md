@@ -10,7 +10,7 @@ python3 only !
 
 - [x] submit code
 
-- [ ] multiple language support(only C++17 C++11 now , see language.json...)
+- [x] multiple language support [c++11/14/17 java8 supported now!]
 
 # Usage
 
