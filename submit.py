@@ -11,14 +11,6 @@ BOLD: str = '\033[1m'
 RESET: str = '\033[0m'
 
 
-def safe_get(dct, key):
-    try:
-        dct = dct[key]
-    except KeyError:
-        return None
-    return dct
-
-
 def get_latest_verdict(user):
     ret = (requests.get('http://codeforces.com/api/user.status?' +
                         'handle={}&from=1&count=1'.format(user))).json()
@@ -27,7 +19,7 @@ def get_latest_verdict(user):
     try:
         result = ret['result'][0]
         result_id = result['id']
-        result_verdict = safe_get(result, 'verdict')
+        result_verdict = result.get('verdict')
         result_time = result['timeConsumedMillis']
         result_memory = result['memoryConsumedBytes']
         passed_test_count = result['passedTestCount']
